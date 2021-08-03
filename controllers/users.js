@@ -27,7 +27,6 @@ const createUser = (req, res, next) => {
             res.send({
               name: candidate.name,
               email: candidate.email,
-              password: candidate.password,
             })
           })
           .catch((err) => {

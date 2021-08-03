@@ -1,5 +1,7 @@
 const mongoose = require('mongoose');
 
+const urlRegexp = /^(http|https):\/\/[a-z,0-9,\W,\\.,\\/,-]{1,}|#+$/gmi;
+
 const movieScheme = mongoose.Schema({
   country: {
     type: String,
@@ -24,20 +26,21 @@ const movieScheme = mongoose.Schema({
   image: {
     type: String,
     required: true,
-    // url
+    validate: {
+      validator: (v) => urlRegexp.test(v),
+    },
+
   },
   trailer: {
     type: String,
     required: true,
-    // url
   },
   thumbnail: {
     type: String,
     required: true,
-    // url
   },
   owner: {
-    type: moongoose.Schema.Types.ObjectId,
+    type: mongoose.Schema.Types.ObjectId,
     ref: 'user',
     required: true,
   },
@@ -53,7 +56,7 @@ const movieScheme = mongoose.Schema({
     type: String,
     required: true,
   },
-}, { versionKey: '_somethingElse' })
+}, { versionKey: false })
 
 const movie = mongoose.model('movie', movieScheme);
 

@@ -4,6 +4,7 @@ const { celebrate, Joi, errors } = require('celebrate');
 
 const { createUser, login } = require('./controllers/users');
 const userRouter = require('./routes/users');
+const movieRouter = require('./routes/movies');
 const { errorHandler } = require('./middlewares/errorHandler');
 const auth = require('./middlewares/auth');
 
@@ -35,6 +36,7 @@ app.post('/signin', celebrate({
 }), login)
 
 app.use('/users', auth, userRouter);
+app.use('/movies', auth, movieRouter);
 
 app.use(errors());
 
