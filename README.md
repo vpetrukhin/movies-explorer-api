@@ -7,4 +7,6 @@
 expressJs, mongodb,
 
 ## Ссылка на проект
+https://api.movies.exprus.nomoredomains.club
 
+Публичный IP: 178.154.194.125
