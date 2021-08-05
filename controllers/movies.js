@@ -11,8 +11,8 @@ const getFilms = (req, res, next) => {
     .then((movies) => {
       res.send(movies);
     })
-    .catch(next)
-}
+    .catch(next);
+};
 const addFilm = (req, res, next) => {
   const {
     country,
@@ -49,7 +49,7 @@ const addFilm = (req, res, next) => {
       res.send({ movie });
     })
     .catch(next);
-}
+};
 const deleteFilm = (req, res, next) => {
   Movie.findById(req.params.movieId)
     .then((movie) => {
@@ -61,11 +61,11 @@ const deleteFilm = (req, res, next) => {
         .then((removedMovie) => res.send(removedMovie))
         .catch(next);
     })
-    .catch(next)
-}
+    .catch(next);
+};
 
 module.exports = {
   addFilm,
   getFilms,
-  deleteFilm
-}
+  deleteFilm,
+};

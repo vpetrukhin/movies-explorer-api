@@ -22,23 +22,20 @@ const createUser = (req, res, next) => {
           password: hash,
         })
           .then((candidate) => {
-            if (!candidate) throw new BadRequest('Переданы некорректные данные при создании пользователя')
+            if (!candidate) throw new BadRequest('Переданы некорректные данные при создании пользователя');
 
             res.send({
               name: candidate.name,
               email: candidate.email,
-            })
+            });
           })
           .catch((err) => {
             if (err._message === 'user validation failed') {
-              throw new BadRequest('Переданы некорректные данные при создании пользователя');
+              return next(new BadRequest('Переданы некорректные данные при создании пользователя'));
             }
-          })
-          .catch(next)
-        )
-        .catch(next)
-    })
-    .catch(next);
+            return (err);
+          }));
+    });
 };
 
 const login = (req, res, next) => {
@@ -46,29 +43,34 @@ const login = (req, res, next) => {
 
   return User.findUserByCredentials(email, password)
     .then((user) => {
-      if (!user) throw new NotFoundError('Пользователь не найден')
+      if (!user) throw new NotFoundError('Пользователь не найден');
 
       const token = jwt.sign(
         { _id: user._id },
-        NODE_ENV === 'production' ? JWT_SECRET : 'dev-secret', { expiresIn: '7d' }
+        NODE_ENV === 'production' ? JWT_SECRET : 'dev-secret', { expiresIn: '7d' },
       );
 
-      res.send({ token, user });
+      res.send({
+        token,
+        _id: user._id,
+        name: user.name,
+        email: user.email,
+      });
     })
     .catch(next);
 };
 
 const getInfoUser = (req, res, next) => {
-  const { email } = req.body;
+  const { _id } = req.user._id;
 
-  User.findOne({ email })
+  User.findOne({ _id })
     .then((user) => {
       if (!user) throw new NotFoundError('Пользователь не найден');
 
       res.send({
         name: user.name,
         email: user.email,
-      })
+      });
     })
     .catch(next);
 };
@@ -77,26 +79,26 @@ const updateInfoUser = (req, res, next) => {
   const { email, name } = req.body;
 
   User.findByIdAndUpdate(req.user._id, { email, name }, {
-      new: true,
-      runValidators: true,
-      upsert: false,
+    new: true,
+    runValidators: true,
+    upsert: false,
+  })
+    .then((user) => {
+      if (user) {
+        res.send({
+          name: user.name,
+          email: user.email,
+        });
+      } else {
+        throw new NotFoundError('Пользователь не найден');
+      }
     })
-      .then((user) => {
-        if (user) {
-          res.send({
-            name: user.name,
-            email: user.email,
-          });
-        } else {
-          throw new NotFoundError('Пользователь не найден');
-        }
-      })
-      .catch(next);
-}
+    .catch(next);
+};
 
 module.exports = {
   createUser,
   login,
   getInfoUser,
   updateInfoUser,
-}
+};

@@ -3,7 +3,6 @@ class MongoError extends Error {
     super(message);
     this.statusCode = 409;
   }
-
 }
 
 module.exports = MongoError;

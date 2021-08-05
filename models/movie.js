@@ -45,7 +45,7 @@ const movieScheme = mongoose.Schema({
     required: true,
   },
   movieId: {
-    type: String,
+    type: Number,
     required: true,
   },
   nameRU: {
@@ -56,7 +56,7 @@ const movieScheme = mongoose.Schema({
     type: String,
     required: true,
   },
-}, { versionKey: false })
+}, { versionKey: false });
 
 const movie = mongoose.model('movie', movieScheme);
 

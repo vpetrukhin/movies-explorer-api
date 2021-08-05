@@ -1,6 +1,8 @@
 const mongoose = require('mongoose');
 const bcrypt = require('bcrypt');
 
+const Unathorized = require('../middlewares/errors/Unauthorized');
+
 const userScheme = new mongoose.Schema({
   email: {
     type: String,
@@ -16,8 +18,9 @@ const userScheme = new mongoose.Schema({
     minlength: 2,
     maxlength: 30,
   },
-}, { versionKey: false })
+}, { versionKey: false });
 
+// eslint-disable-next-line func-names
 userScheme.statics.findUserByCredentials = function (email, password) {
   return this.findOne({ email })
     .then((user) => {
@@ -25,13 +28,12 @@ userScheme.statics.findUserByCredentials = function (email, password) {
 
       return bcrypt.compare(password, user.password)
         .then((matched) => {
-          if (!matched) throw new Unauthorized('Неправильная почта или пароль');
+          if (!matched) throw new Unathorized('Неправильная почта или пароль');
 
           return user;
         });
-    })
-
-}
+    });
+};
 
 const user = mongoose.model('user', userScheme);
 
