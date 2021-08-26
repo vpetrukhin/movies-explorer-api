@@ -1,6 +1,6 @@
 const allowedCors = [
-  'http://people.mesto.nomoredomains.monster',
-  'https://people.mesto.nomoredomains.monster',
+  'http://movies.exprus.nomoredomains.monster',
+  'https://movies.exprus.nomoredomains.monster',
 ];
 const DEFAULT_ALLOWED_METHODS = 'GET,HEAD,PUT,PATCH,POST,DELETE';
 
