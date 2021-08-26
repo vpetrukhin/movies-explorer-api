@@ -10,7 +10,7 @@ const { requestLogger, errorLogger } = require('./middlewares/logger');
 const { sourcesCorsHandler } = require('./middlewares/CORS');
 const NotFoundError = require('./middlewares/errors/NotFoundError');
 
-const { PORT = 3000, DB_ADDRESS = 'mongodb://localhost:27017/filmslistdb' } = process.env;
+const { PORT = 5000, DB_ADDRESS = 'mongodb://localhost:27017/filmslistdb' } = process.env;
 
 const limiter = rateLimit({
   windowMs: 60 * 60 * 1000,
