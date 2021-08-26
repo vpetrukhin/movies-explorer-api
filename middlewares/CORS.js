@@ -1,6 +1,7 @@
 const allowedCors = [
-  'http://movies.exprus.nomoredomains.monster',
-  'https://movies.exprus.nomoredomains.monster',
+  "http://movies.exprus.nomoredomains.monster",
+  "https://movies.exprus.nomoredomains.monster",
+  "http://localhost:3000",
 ];
 const DEFAULT_ALLOWED_METHODS = 'GET,HEAD,PUT,PATCH,POST,DELETE';
 
