@@ -4,6 +4,7 @@ const bcrypt = require('bcrypt');
 const Unathorized = require('../middlewares/errors/Unauthorized');
 
 const userScheme = new mongoose.Schema({
+  // _id: mongoose.ObjectId,
   email: {
     type: String,
     required: true,
