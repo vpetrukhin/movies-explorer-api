@@ -1,3 +1,4 @@
+const mongoose = require("mongoose");
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 
@@ -61,11 +62,10 @@ const login = (req, res, next) => {
 };
 
 const getInfoUser = (req, res, next) => {
-  const { _id } = req.user._id;
-
-  User.findOne({ _id })
+  User.findById(req.user._id)
     .then((user) => {
-      if (!user) throw new NotFoundError('Пользователь не найден');
+      console.log(user);
+      if (!user) throw new NotFoundError("Пользователь не найден");
 
       res.send({
         name: user.name,
