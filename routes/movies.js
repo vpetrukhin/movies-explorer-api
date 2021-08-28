@@ -6,7 +6,9 @@ const { addFilm, getFilms, deleteFilm } = require('../controllers/movies');
 const NotValid = require('../middlewares/errors/NotValid');
 
 const isURL = (value) => {
-  const result = validator.isURL(value);
+  const result = validator.isURL(value, {
+    allow_protocol_relative_urls: false,
+  });
   if (!result) throw new NotValid('Передан некорректный URL');
   return value;
 };
